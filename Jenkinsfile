@@ -21,9 +21,6 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    // Check out Dockerfile from your VCS (GitHub in this case)
-                    checkout([$class: 'GitSCM', branches: [[name: '*/cicd']], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'PathRestriction', excludedRegions: '', includedRegions: '', inculdeSubModules: false, locations: [[credentialsId: 'your-github-credentials-id', depth: 1]]]], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/bibek009/nodejs-todo.git']]])
-
                     // Build Docker image using the specified Dockerfile
                     sh "docker build -t $IMAGE_NAME ."
                 }
