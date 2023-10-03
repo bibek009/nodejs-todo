@@ -12,11 +12,11 @@ pipeline {
             }
         }
 
-        stage('Build and Test') {
-            steps {
+  //      stage('Build and Test') {
+  //          steps {
                 //sh 'npm test'
-            }
-        }
+  //          }
+  //      }
 
         stage('Build Docker Image') {
             steps {
