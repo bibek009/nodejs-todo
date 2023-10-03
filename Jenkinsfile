@@ -38,7 +38,7 @@ pipeline {
 
         stage('Deploy to VPS') {
             steps {
-                sshagent([credentials: [[$class: 'UsernamePasswordMultiBinding', credentialsId: 'your-ssh-credentials-id', usernameVariable: 'SSH_USERNAME', passwordVariable: 'SSH_PASSWORD']]]) {
+                sshagent([credentials: [[$class: 'UsernamePasswordMultiBinding', credentialsId: '3', usernameVariable: 'SSH_USERNAME', passwordVariable: 'SSH_PASSWORD']]]) {
                     sh "ssh $SSH_USERNAME@192.168.40.4 'docker pull $IMAGE_NAME && docker-compose up -d'"
                 }
             }
