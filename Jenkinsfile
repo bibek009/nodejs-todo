@@ -30,9 +30,6 @@ pipeline {
         }
 
         stage('Deploy to DEV') {
-            when {
-                expression { env.BRANCH_NAME == 'main' }
-            }
             steps {
                 script {
                     sh """
@@ -45,9 +42,6 @@ pipeline {
         }
 //deplo
         stage('Deploy to PROD') {
-            when {
-                expression { env.BRANCH_NAME == 'main' }
-            }
             steps {
                 script {
                     def userInput = input(
