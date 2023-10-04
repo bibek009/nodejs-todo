@@ -11,6 +11,14 @@ pipeline {
                 checkout scm
             }
         }
+        stage('Lint with ESLint') {
+            steps {
+                script {
+                    sh 'npm install' // Install dependencies (including ESLint)
+                    sh 'npx eslint . --fix' // Run ESLint and auto-fix issues
+                }
+            }
+        }
 
         stage('Build Docker Image') {
             steps {
