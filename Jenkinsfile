@@ -43,7 +43,7 @@ pipeline {
                 }
             }
         }
-//deploy
+//deplo
         stage('Deploy to PROD') {
             when {
                 expression { env.BRANCH_NAME == 'main' }
