@@ -36,10 +36,22 @@ pipeline {
             }
         }
 
-        stage('Deploy to VPS') {
+        stage('Deploy Docker Container') {
             steps {
-                sshagent(credentials: ['3']) {
-                    sh "docker -H ssh://root@192.168.40.4 run -d -p 3000:3000 $IMAGE_NAME"
+                script {
+                    // Start SSH agent and add the SSH key using the numeric ID
+                    sshagent(['sshagent_credentials_id' : 3]) {
+                        // SSH into the remote server and deploy the Docker container
+                        sshCommand(
+                            remote: 192.168.40.4,
+                            user: root,
+                            command: """
+                                ssh -o StrictHostKeyChecking=no root@192.168.40.4 \
+                                "docker pull $IMAGE_NAME &&
+                                 docker-compose -f $REMOTE_DOCKER_COMPOSE_FILE up -d
+                            """
+                        )
+                    }
                 }
             }
         }
