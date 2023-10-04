@@ -39,7 +39,7 @@ pipeline {
         stage('Deploy to VPS') {
             steps {
                 sshagent(credentials: ['3']) {
-                    sh "ssh -v root@192.168.40.4 'docker pull $IMAGE_NAME && docker-compose up -d'"
+                    sh "docker -H ssh://root@192.168.40.4 run -d -p 3000:3000 $IMAGE_NAME"
                 }
             }
         }
