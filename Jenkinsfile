@@ -1,8 +1,8 @@
 pipeline {
     agent any
+
     environment {
         IMAGE_NAME = 'bibekbajagain/nodejs-todo'
-        VPS_SSH_CREDENTIALS = '1'
     }
 
     stages {
@@ -12,16 +12,9 @@ pipeline {
             }
         }
 
-  //      stage('Build and Test') {
-  //          steps {
-                //sh 'npm test'
-  //          }
-  //      }
-
         stage('Build Docker Image') {
             steps {
                 script {
-                    // Build Docker image using the specified Dockerfile
                     sh "docker build -t $IMAGE_NAME ."
                 }
             }
@@ -36,7 +29,10 @@ pipeline {
             }
         }
 
-        stage('Deploy Docker Container') {
+        stage('Deploy to DEV') {
+            when {
+                expression { env.BRANCH_NAME == 'main' }
+            }
             steps {
                 script {
                     sh """
@@ -44,6 +40,30 @@ pipeline {
                         "docker pull $IMAGE_NAME &&
                          docker run -d -p 3000:3000 $IMAGE_NAME"
                     """
+                }
+            }
+        }
+
+        stage('Deploy to PROD') {
+            when {
+                expression { env.BRANCH_NAME == 'main' }
+            }
+            steps {
+                script {
+                    def userInput = input(
+                        id: 'userInput',
+                        message: 'Deploy to PROD?',
+                        ok: 'Deploy'
+                    )
+                    if (userInput == 'Deploy') {
+                        sh """
+                            ssh -o StrictHostKeyChecking=no root@192.168.40.4 \
+                            "docker pull $IMAGE_NAME &&
+                             docker run -d -p 3000:3000 $IMAGE_NAME"
+                        """
+                    } else {
+                        error 'Production deployment rejected by user.'
+                    }
                 }
             }
         }
