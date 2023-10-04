@@ -34,7 +34,7 @@ pipeline {
                 script {
                     sh """
                         ssh -o StrictHostKeyChecking=no root@192.168.40.4 \
-                        "docker pull $IMAGE_NAME && docker stop nice_clarke &&
+                        "docker pull $IMAGE_NAME && docker rm -f nice_clarke &&
                          docker run -d -p 3000:3000 $IMAGE_NAME"
                     """
                 }
@@ -52,8 +52,8 @@ pipeline {
                     if (userInput == 'Deploy') {
                         sh """
                             ssh -o StrictHostKeyChecking=no root@192.168.40.4 \
-                            "docker pull $IMAGE_NAME && docker stop nice_clarke &&
-                             docker run -d -p 3000:3000 $IMAGE_NAME"
+                            "docker pull $IMAGE_NAME && docker rm -f nice_clarke &&
+                             docker run -d -p 4000:4000 $IMAGE_NAME"
                         """
                     } else {
                         error 'Production deployment rejected by user.'
