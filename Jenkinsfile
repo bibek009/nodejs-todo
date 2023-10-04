@@ -51,7 +51,6 @@ pipeline {
                                  docker run -d  -p 3000:3000 bibekbajagain/nodejs-todo"
                             """
                         )
-                    }
                 }
             }
         }
