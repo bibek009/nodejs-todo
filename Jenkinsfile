@@ -39,18 +39,11 @@ pipeline {
         stage('Deploy Docker Container') {
             steps {
                 script {
-                    // Start SSH agent and add the SSH key using the numeric ID
-                    //sshagent(['sshagent_credentials_id' : 3]) {
-                        // SSH into the remote server and deploy the Docker container
-                        //sshCommand(
-                      //      remote: 192.168.40.4,
-                      //      user: root,
-                            command: """
-                                ssh -o StrictHostKeyChecking=no root@192.168.40.4 \
-                                "docker pull $IMAGE_NAME &&
-                                 docker run -d  -p 3000:3000 bibekbajagain/nodejs-todo"
-                            """
-                        //)
+                    sh """
+                        ssh -o StrictHostKeyChecking=no root@192.168.40.4 \
+                        "docker pull $IMAGE_NAME &&
+                         docker run -d -p 3000:3000 $IMAGE_NAME"
+                    """
                 }
             }
         }
