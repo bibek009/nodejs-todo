@@ -15,6 +15,7 @@ pipeline {
             steps {
                 script {
                     sh 'npm install' // Install dependencies (including ESLint)
+                    npm init @eslint/config
                     sh 'npx eslint . --fix' // Run ESLint and auto-fix issues
                 }
             }
