@@ -13,5 +13,8 @@
     "body-parser": "^1.18.0",
     "ejs": "^2.5.7",
     "express": "^4.15.4"
+  },
+  "devDependencies": {
+    "eslint": "^8.0.0"   // This will be added after running the install command
   }
 }
