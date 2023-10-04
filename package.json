@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint ."
   },
   "author": "Vanessa Ating",
   "license": "ISC",
@@ -15,6 +16,7 @@
     "express": "^4.15.4"
   },
   "devDependencies": {
-    "eslint": "^8.0.0"   // This will be added after running the install command
+    "eslint": "^8.0.0"
   }
 }
+
